@@ -1,6 +1,7 @@
 # Include stupidity.
 override CPPFLAGS := $(CPPFLAGS) \
 	-DZYDIS_STATIC_BUILD \
+	-DZYDIS_STATIC_DEFINE \
 	-Izydis/include \
 	-Izydis/dependencies/zycore/include \
 	-Izydis/build \
@@ -19,6 +20,7 @@ zydis/build/libZydis.a:
 zydis.so: zydis.o
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) \
 	-Wl,--whole-archive zydis/build/libZydis.a -Wl,--no-whole-archive \
+	-Wl,--whole-archive zydis/build/zycore/libZycore.a -Wl,--no-whole-archive \
 	zydis.o $(LDLIBS) -o $@
 
 zydis.o: zydis/build/libZydis.a zydis.c
